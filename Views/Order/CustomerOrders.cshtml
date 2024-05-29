@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MiniProjet.Net.Models.Order>
+
+@{
+    ViewData["Title"] = "Customer Orders";
+}
+
+<h1>Customer Orders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Total Amount</th>
+            <th>Is Paid</th>
+            <th>Order Items</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.OrderId</td>
+                <td>@order.OrderDate</td>
+                <td>@order.TotalAmount</td>
+                <td>@order.IsPaid</td>
+                <td>
+                    <ul>
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <li>@item.Product.ProductName - @item.Quantity</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

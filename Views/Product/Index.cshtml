@@ -1,0 +1,128 @@
+﻿    @model IEnumerable<MiniProjet.Net.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    ViewData["Title"] = "Products";
+
+}
+
+
+
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create" class="ms-4">Create new product</a>
+    </p>
+    <table class="table ms-3 text-center table-striped align-middle">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                    <td>
+                        <img src="~/images/@item.ImageUrl" alt="Product Image" width="100" height="100" />
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit<img class="actionimg" src="~/images/editing.png" /></a> |
+                        <a asp-action="Details" asp-route-id="@item.ProductId">View<img class="actionimg" src="~/images/sight.png" /></a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProductId">Delete<img class="actionimg" src="~/images/delete.png" /></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+
+{
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Shop in style</h1>
+                <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
+                <h2 class="text-center text-secondary mt-1">List Des Produits</h2>
+
+                <form class="form-inline my-2 my-lg-0 ms-5" asp-action="SearchN" asp-controller="Product">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <input size="30" placeholder="Tapez un Nom du Produit" type="search" name="name" class="form-control" />
+                        </div>
+                        <div class="col-md-3 mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text">Min Prix</span>
+                                <input size="10" placeholder="Min Prix" type="number" name="minPrice" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">Max Prix</span>
+                                <input size="10" placeholder="Max Prix" type="number" name="maxPrice" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <div class="card-group">
+        @foreach (var product in Model)
+        {
+            var photoPath = "~/images/" + (product.ImageUrl ?? "noimage.jpg");
+            <div class="card m-3 ms-5 text-center" style="min-width: 18rem; max-width:20%;">
+                <div class="card-header">
+                    <h5><b>Désignation : </b> @product.ProductName</h5>
+                    <h5><b>Prix : </b>@product.Price</h5>
+                    <h5><b>Quantité : </b> @product.Stock</h5>
+                    @if (product.Category != null)
+                    {
+                        <h5><b>Categorie : </b> @product.Category.CategoryName</h5>
+                    }
+                </div>
+                <img class="card-img-top imageThumbnail h-75 w-100" src="@photoPath" asp-append-version="true" />
+                <div class="card-footer text-center">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+
+                        @Html.ActionLink("Ajouter au panier »", "AjouterProduit", "Panier", new { id = @product.ProductId }, "")
+                    }
+                </div>
+            </div>
+        }
+    </div>
+  
+}

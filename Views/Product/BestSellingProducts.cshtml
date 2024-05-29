@@ -1,0 +1,22 @@
+﻿@model IEnumerable<MiniProjet.Net.Models.Product>
+
+<h2>Les articles les plus vendus</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom du produit</th>
+            <th>Description</th>
+            <th>Prix</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductName</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>

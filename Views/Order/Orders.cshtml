@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MiniProjet.Net.Models.Order>
+
+<h2>Commandes de l'utilisateur</h2>
+
+@foreach (var order in Model)
+{
+    <h3>Commande #@order.OrderId</h3>
+    <p>Date de commande : @order.OrderDate.ToString("dd/MM/yyyy")</p>
+    <p>Montant total : @order.TotalAmount.ToString("C")</p>
+    <p>Payée : @(order.IsPaid ? "Oui" : "Non")</p>
+    @foreach (var ite in @order.OrderItems)
+    {
+        <p>Payée : @ite.Price </p>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderItem in order.OrderItems)
+            {
+                <tr>
+                    <td>@orderItem.Product.ProductName</td>
+                    <td>@orderItem.Quantity</td>
+                    <td>@orderItem.Price.ToString("C")</td>
+                    <td>@((orderItem.Quantity * orderItem.Price).ToString("C"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

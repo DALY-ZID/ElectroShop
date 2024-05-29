@@ -1,0 +1,48 @@
+﻿    @model MiniProjet.Net.Models.Product
+@{
+    ViewData["Title"] = "HotArticle";
+    var photo = "~/images/" + (Model.ImageUrl);
+}
+
+<h2 class="text-center text-secondary mt-4" style="color:red;">L'Articles Le plus Vendu</h2>
+
+<div>
+    <dl class="row m-5">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Stock)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@photo" asp-append-version="true" height="120" width="120" />
+        </dd>
+    </dl>
+</div>
+<div class="ms-5">
+    <a asp-action="Edit" asp-controller="Produit" asp-route-id="@Model?.ProductId">Edit<img class="actionimg" src="~/images/editing.png" /></a>
+
+    <a asp-controller="Produit" asp-action="Index">Back to List</a>
+</div>

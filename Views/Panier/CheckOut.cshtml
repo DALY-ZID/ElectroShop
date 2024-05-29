@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // If you have a shared layout
+}
+
+<h2>Checkout</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<p>Thank you for your order!</p>

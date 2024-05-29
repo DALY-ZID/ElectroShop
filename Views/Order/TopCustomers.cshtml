@@ -1,0 +1,32 @@
+﻿@model IList<MiniProjet.Net.Repositories.OrderRepositories.TopCustomer>
+
+@{
+    ViewBag.Title = "Top Customers";
+}
+
+<h2>Top Customers</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No top customers found.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.UserName</td>
+                    <td>@customer.TotalAmount.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
